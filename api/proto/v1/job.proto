@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package gosched.v1;
+
+option go_package = "github.com/ilya-shevelev/gosched/api/proto/v1;v1";
+
+import "api/proto/v1/resource.proto";
+import "google/protobuf/timestamp.proto";
+
+// Job represents a schedulable unit of work.
+message Job {
+  string id = 1;
+  string name = 2;
+  string tenant = 3;
+  string queue = 4;
+  int32 priority = 5;
+  string state = 6;
+  Resources resources = 7;
+  int32 task_count = 8;
+  Resources task_resources = 9;
+  google.protobuf.Timestamp deadline = 10;
+  int32 max_retries = 11;
+  map<string, string> labels = 12;
+  map<string, string> node_selector = 13;
+  google.protobuf.Timestamp created_at = 14;
+  google.protobuf.Timestamp started_at = 15;
+  string preemption_policy = 16;
+}

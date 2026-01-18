@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package gosched.v1;
+
+option go_package = "github.com/ilya-shevelev/gosched/api/proto/v1;v1";
+
+import "api/proto/v1/resource.proto";
+import "google/protobuf/timestamp.proto";
+
+// NodeService manages compute nodes in the cluster.
+service NodeService {
+  // RegisterNode registers a new compute node.
+  rpc RegisterNode(RegisterNodeRequest) returns (RegisterNodeResponse);
+  // Heartbeat sends a periodic health update from a node.
+  rpc Heartbeat(HeartbeatRequest) returns (HeartbeatResponse);
+  // ListNodes returns all registered nodes.
+  rpc ListNodes(ListNodesRequest) returns (ListNodesResponse);
+  // DeregisterNode removes a node from the cluster.
+  rpc DeregisterNode(DeregisterNodeRequest) returns (DeregisterNodeResponse);
+}
+
+message NodeInfo {
+  string id = 1;
+  string hostname = 2;
+  map<string, string> labels = 3;
+  repeated Taint taints = 4;
+  Resources total = 5;
+  Resources used = 6;
+  Resources available = 7;
+  bool healthy = 8;
+  google.protobuf.Timestamp last_heartbeat = 9;
+}
+
+message Taint {
+  string key = 1;
+  string value = 2;
+  string effect = 3;
+}
+
+message RegisterNodeRequest {
+  NodeInfo node = 1;
+}
+
+message RegisterNodeResponse {
+  bool success = 1;
+}
+
+message HeartbeatRequest {
+  string node_id = 1;
+  Resources used = 2;
+}
+
+message HeartbeatResponse {
+  bool success = 1;
+}
+
+message ListNodesRequest {
+  bool healthy_only = 1;
+}
+
+message ListNodesResponse {
+  repeated NodeInfo nodes = 1;
+}
+
+message DeregisterNodeRequest {
+  string node_id = 1;
+}
+
+message DeregisterNodeResponse {
+  bool success = 1;
+}

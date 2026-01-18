@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package gosched.v1;
+
+option go_package = "github.com/ilya-shevelev/gosched/api/proto/v1;v1";
+
+// Resources represents compute resource requirements or capacity.
+message Resources {
+  // CPU in millicores (1000m = 1 core).
+  int64 cpu_millis = 1;
+  // Memory in bytes.
+  int64 memory_bytes = 2;
+  // GPU requirements.
+  GPUResources gpu = 3;
+  // Storage in bytes.
+  int64 storage_bytes = 4;
+  // Custom resource types.
+  map<string, int64> custom = 5;
+}
+
+// GPUResources describes GPU requirements.
+message GPUResources {
+  int32 count = 1;
+  string type = 2;
+  int64 min_memory_bytes = 3;
+  string model = 4;
+}
