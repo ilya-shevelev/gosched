@@ -1,0 +1,47 @@
+master:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/ilya-shevelev/gosched-master
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    grpcPort: 9090
+    httpPort: 8080
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+  config:
+    algorithm: binpack
+    schedulePeriod: 1s
+
+agent:
+  image:
+    repository: ghcr.io/ilya-shevelev/gosched-agent
+    tag: latest
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  config:
+    heartbeatInterval: 10s
+
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: false
+
+serviceAccount:
+  create: true
+  name: ""
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

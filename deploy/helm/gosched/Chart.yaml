@@ -1,0 +1,18 @@
+apiVersion: v2
+name: gosched
+description: GoSched - Distributed Resource Scheduler for Heterogeneous Compute Workloads
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - scheduler
+  - distributed
+  - gpu
+  - resource-management
+  - cloud-native
+maintainers:
+  - name: Ilya Shevelev
+    url: https://github.com/ilya-shevelev
+home: https://github.com/ilya-shevelev/gosched
+sources:
+  - https://github.com/ilya-shevelev/gosched
