@@ -1,0 +1,42 @@
+# GoSched example configuration file.
+# Start the master with: gosched-master --config=examples/config.yaml
+
+server:
+  grpc_addr: ":9090"
+  http_addr: ":8080"
+  algorithm: "binpack"
+  schedule_period: "1s"
+
+raft:
+  enabled: false
+  node_id: "master-1"
+  bind_addr: "0.0.0.0:7000"
+  data_dir: "/var/lib/gosched/raft"
+  bootstrap: true
+  peers: []
+
+quotas:
+  data-science:
+    max_cpu: 64000
+    max_memory: "256Gi"
+    guaranteed_cpu: 16000
+    guaranteed_memory: "64Gi"
+  platform:
+    max_cpu: 32000
+    max_memory: "128Gi"
+    guaranteed_cpu: 8000
+    guaranteed_memory: "32Gi"
+
+queues:
+  - name: production
+    type: capacity
+    capacity_pct: 60
+    max_pct: 80
+  - name: development
+    type: capacity
+    capacity_pct: 30
+    max_pct: 50
+  - name: testing
+    type: capacity
+    capacity_pct: 10
+    max_pct: 100
